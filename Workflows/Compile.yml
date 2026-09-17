@@ -1,0 +1,26 @@
+name: Build Zooba 2 EBOOT.PBP
+
+on:
+  push:
+    branches: [ "main", "master" ]
+  pull_request:
+    branches: [ "main", "master" ]
+
+jobs:
+  build-psp:
+    runs-on: ubuntu-latest
+    container: pspdev/pspdev:latest
+
+    steps:
+      - name: Baixar codigo do repositorio
+        uses: actions/checkout@v4
+
+      - name: Compilar EBOOT.PBP
+        run: |
+          make
+
+      - name: Publicar EBOOT.PBP como Artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: Zooba2_EBOOT
+          path: EBOOT.PBP
